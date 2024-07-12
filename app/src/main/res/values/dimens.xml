@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="btnWidth">130dp</dimen>
+    <dimen name="btnHeight">55dp</dimen>
+    <dimen name="buttonCorners">5dp</dimen>
+    <dimen name="mediumBtnWidth">200dp</dimen>
+    <dimen name="etHeight">60dp</dimen>
+</resources>

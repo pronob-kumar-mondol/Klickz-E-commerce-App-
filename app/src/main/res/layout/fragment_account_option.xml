@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.fragments.AccountOptionFragment">
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/blury_background"
+        android:scaleType="centerCrop"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <TextView
+            android:id="@+id/appName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            style="@style/h3"
+            android:drawablePadding="6dp"
+            android:textStyle="bold"
+            app:drawableStartCompat="@drawable/ic_kleine_shape"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="120dp"/>
+
+        <TextView
+            android:id="@+id/tvMaintxt"
+            style="@style/h4"
+            android:layout_width="231dp"
+            android:layout_height="123dp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:layout_marginTop="60dp"
+            android:text="@string/middleText"
+            android:textAlignment="center"
+            app:layout_constraintTop_toBottomOf="@+id/appName"
+            app:layout_constraintStart_toStartOf="@+id/appName"
+            app:layout_constraintEnd_toEndOf="@+id/appName"
+            />
+
+        <TextView
+            android:id="@+id/smallTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/h2"
+            android:text="@string/belowtxt"
+            android:gravity="center"
+            android:textAlignment="center"
+            app:layout_constraintTop_toBottomOf="@+id/tvMaintxt"
+            app:layout_constraintStart_toStartOf="@+id/tvMaintxt"
+            app:layout_constraintEnd_toEndOf="@+id/tvMaintxt"
+            />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/registerBtn"
+            style="@style/blueButtonStyle"
+            android:layout_width="@dimen/mediumBtnWidth"
+            android:layout_height="@dimen/btnHeight"
+            android:text="@string/register"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/smallTxt"
+            app:layout_constraintHorizontal_bias="0.52"
+            app:layout_constraintStart_toStartOf="@id/smallTxt"
+            app:layout_constraintTop_toBottomOf="@id/smallTxt"
+            app:layout_constraintVertical_bias="0.265" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/loginBtn"
+            style="@style/whiteButtonStyle"
+            android:layout_width="@dimen/btnWidth"
+            android:layout_height="@dimen/btnHeight"
+            android:text="@string/login"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/registerBtn"
+            app:layout_constraintHorizontal_bias="0.485"
+            app:layout_constraintStart_toStartOf="@id/registerBtn"
+            app:layout_constraintTop_toBottomOf="@id/registerBtn"
+            app:layout_constraintVertical_bias="0.104" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
