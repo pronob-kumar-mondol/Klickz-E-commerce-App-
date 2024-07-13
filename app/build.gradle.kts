@@ -5,6 +5,7 @@ plugins {
     id ("androidx.navigation.safeargs.kotlin")
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -37,6 +38,10 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -46,6 +51,8 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.firestore)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -57,8 +64,9 @@ dependencies {
     implementation ("androidx.navigation:navigation-fragment-ktx:$nav_version")
     implementation ( "androidx.navigation:navigation-ui-ktx:$nav_version")
 
-    //loading button
-    implementation ("br.com.simplepass:loading-button-android:2.2.0")
+    // https://mvnrepository.com/artifact/br.com.simplepass/loading-button-android
+    implementation("com.github.leandroborgesferreira:loading-button-android:2.3.0")
+
 
     //Glide
     implementation ("com.github.bumptech.glide:glide:4.13.0")
@@ -66,20 +74,25 @@ dependencies {
     //circular image
     implementation ("de.hdodenhof:circleimageview:3.1.0")
 
-    //viewpager2 indicatior
-    implementation ("io.github.vejei.viewpagerindicator:viewpagerindicator:1.0.0-alpha.1")
+    // https://mvnrepository.com/artifact/io.github.vejei.viewpagerindicator/viewpagerindicator
+//    implementation("io.github.vejei.viewpagerindicator:viewpagerindicator:1.0.0-alpha.1")
 
-    //stepView
-    implementation ("com.shuhart.stepview:stepview:1.5.1")
+
+    // https://mvnrepository.com/artifact/com.shuhart.stepview/stepview
+//    implementation("com.shuhart.stepview:stepview:1.5.1")
+
 
     //Android Ktx
     implementation ("androidx.navigation:navigation-fragment-ktx:2.7.7")
 
     //Dagger hilt
-    implementation("com.google.dagger:hilt-android:2.44")
-    kapt("com.google.dagger:hilt-android-compiler:2.44")
+    implementation("com.google.dagger:hilt-android:2.48")
+    kapt("com.google.dagger:hilt-android-compiler:2.48")
 
 
     //Coroutines with firebase
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4")
+
+//    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.3.11")
+
 }

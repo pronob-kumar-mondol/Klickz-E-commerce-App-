@@ -1,60 +1,103 @@
 package com.example.ecommerceapp.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.example.ecommerceapp.R
+import com.example.ecommerceapp.data.User
+import com.example.ecommerceapp.databinding.FragmentRegisterBinding
+import com.example.ecommerceapp.util.RegisterFieldsState
+import com.example.ecommerceapp.util.RegisterValidation
+import com.example.ecommerceapp.util.Resource
+import com.example.ecommerceapp.viewmodel.RegisterViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [RegisterFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+@AndroidEntryPoint
 class RegisterFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private val TAG="RegisterActivity"
+    private lateinit var binding: FragmentRegisterBinding
+    private val viewModel by viewModels<RegisterViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_register, container, false)
+    ): View {
+        binding= FragmentRegisterBinding.inflate(inflater,container,false)
+
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment RegisterFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            RegisterFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
+        binding.apply {
+
+            registerBtnRegister.setOnClickListener{
+                val user=User(
+                    firstNameEtRegister.text.toString().trim(),
+                    lastNameEtRegister.text.toString().trim(),
+                    emailEtRegister.text.toString().trim()
+                )
+                val password=passwordEtRegister.text.toString()
+                Log.d(TAG, "onViewCreated: ${user.email}")
+                Log.d(TAG, "hello: $password")
+
+                viewModel.createUserWithEmailAndPassword(user,password)
+
+
+
+            }
+
+        }
+
+        lifecycleScope.launch {
+            viewModel.register.collect {
+                when (it) {
+                    is Resource.Loading -> {
+                        binding.registerBtnRegister.startAnimation()
+                    }
+                    is Resource.Success -> {
+                        binding.registerBtnRegister.revertAnimation()
+                    }
+                    is Resource.Error -> {
+                        Log.e(TAG,it.message.toString())
+                        binding.registerBtnRegister.revertAnimation()
+                    }
+                    else -> Unit
                 }
             }
+        }
+
+        lifecycleScope.launch {
+            viewModel.validation.collect{
+                if (it.email is RegisterValidation.Failed){
+                    binding.emailEtRegister.apply {
+                        withContext(Dispatchers.Main){
+                            error=it.email.erorMsg
+                        }
+                    }
+                }
+                if (it.password is RegisterValidation.Failed){
+                    binding.passwordEtRegister.apply {
+                        withContext(Dispatchers.Main){
+                            error=it.password.erorMsg
+                        }
+                    }
+                }
+            }
+        }
+
+
     }
 }
